@@ -37,6 +37,21 @@ export function zmap(state) {
     return m;
 };
 
+/*
+ * Prefer resolved physical devices from fw4.state.
+ * When fw4 leaves related_physdevs empty, fall back to match_devices.
+ */
+export function zone_devices(zone) {
+    if (!zone)
+        return [];
+
+    let phys = uniq(zone.related_physdevs || []);
+    if (length(phys))
+        return phys;
+
+    return uniq(zone.match_devices || []);
+};
+
 export function zone_has_iface(z, ifname) {
     let nets = z.network || [];
     for (let n in nets)

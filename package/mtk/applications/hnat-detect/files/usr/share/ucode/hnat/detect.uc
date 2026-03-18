@@ -91,16 +91,25 @@ if (length(src_zones) > 1) {
 log.debug(`lan_zone = ${lan_zone_name || '-'}, lan2_zone = ${lan2_zone_name || '-'}`);
 
 /* resolve zone endpoints */
-const zone_eps = (zone_name) => {
+const zone_devs = (zone_name) => {
 	let zone = z[zone_name];
-	let phys = zone ? (zone.related_physdevs || []) : [];
-	let eps = uniq(merge(...map(phys, d => sysnet.resolve_endpoints(d, roots, 0))));
-	return eps;
+	let devs = fw4.zone_devices(zone);
+
+	if (zone && !length(zone.related_physdevs || []) && length(zone.match_devices || []))
+		log.debug(`zone ${zone_name}: related_physdevs empty, fallback match_devices = ${devs}`);
+
+	return devs;
 };
 
-let wan_eps  = zone_eps(nat_zone.name);
-let lan_eps  = lan_zone_name  ? zone_eps(lan_zone_name)  : [];
-let lan2_eps = lan2_zone_name ? zone_eps(lan2_zone_name) : [];
+const zone_eps = (devs) => uniq(merge(...map(devs, d => sysnet.resolve_endpoints(d, roots, 0))));
+
+let nat_zone_devs  = zone_devs(nat_zone.name);
+let lan_zone_devs  = lan_zone_name  ? zone_devs(lan_zone_name)  : [];
+let lan2_zone_devs = lan2_zone_name ? zone_devs(lan2_zone_name) : [];
+
+let wan_eps  = zone_eps(nat_zone_devs);
+let lan_eps  = zone_eps(lan_zone_devs);
+let lan2_eps = zone_eps(lan2_zone_devs);
 
 log.debug(`eps: wan = ${wan_eps}, lan = ${lan_eps}, lan2 = ${lan2_eps}`);
 
@@ -201,7 +210,7 @@ const RX_PPD_NAME = "rxppd";
 const is_ext = (name) => {
     return match(name, /^(usb|wwan|eth)/); 
 };
-let ext_devs = filter(nat_zone.related_physdevs, d => is_ext(d) && !is_gmac(d));
+let ext_devs = filter(nat_zone_devs, d => is_ext(d) && !is_gmac(d));
 
 /* remove useless "dummy0" created by default */
 if (sysnet.dev_exist("dummy0")) {
@@ -211,7 +220,7 @@ if (sysnet.dev_exist("dummy0")) {
 if (length(ext_devs) > 0) {
 	/* find bridge device in lan zone */
 	let br_dev = null;
-	let lan_devs = z[lan_zone_name].related_physdevs || [];
+	let lan_devs = lan_zone_devs;
 	for (let dev in lan_devs) {
 		if (sysnet.is_bridge(dev)) {
 			br_dev = dev;
