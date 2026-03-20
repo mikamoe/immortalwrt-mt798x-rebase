@@ -53,7 +53,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🧾 Init build options
         run: |
@@ -102,7 +102,7 @@ jobs:
           ln -sf /workdir/openwrt "$GITHUB_WORKSPACE/openwrt"
 
       - name: ⚡ Restore ccache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.ccache
           key: ${{ runner.os }}-ccache-${{ env.REPO_BRANCH }}-${{ hashFiles('.config') }}
@@ -111,7 +111,7 @@ jobs:
             ${{ runner.os }}-ccache-
 
       - name: 📦 Restore dl cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: openwrt/dl
           key: ${{ runner.os }}-dl-${{ env.REPO_BRANCH }}-${{ hashFiles('feeds.conf.default', '.config', 'diy-part1.sh', 'diy-part2.sh') }}
@@ -181,7 +181,7 @@ jobs:
         run: df -hT
 
       - name: 📁 Upload bin directory
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
         with:
           name: immortalwrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -209,7 +209,7 @@ jobs:
           ls -lh "$GITHUB_WORKSPACE/upload"
 
       - name: 🚚 Upload sysupgrade firmware
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: steps.organize.outputs.status == 'success' && !cancelled()
         with:
           name: immortalwrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
