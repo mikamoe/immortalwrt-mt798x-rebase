@@ -6,38 +6,37 @@ This repository is worked on ImmortalWrt with MTK OpenWrt Feeds patches imported
 
 ## Commit Cutoff Revisions
 
-### ImmortalWrt: [eab2248](https://github.com/immortalwrt/immortalwrt/commit/eab224867755176235ed1099b45413c1b63cbd57) - OpenWrt 25.12.0-rc5
+### ImmortalWrt: [1cc0390](https://github.com/immortalwrt/immortalwrt/commit/1cc0390ddf5453691059dc4d21e8d1ca3277e023) - OpenWrt 25.12.1
 
 ```
-rockchip: remove broken vdd-supply props from the usb hub for photonicat2
-
-See [#2235](https://github.com/immortalwrt/immortalwrt/issues/2235).
-
-Sync dts for u-boot while at it.
+Merge Official Source
 
 Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
-(cherry picked from commit e61a1d0a590b4c50b255b1791d8fda26ba470c03)
 ```
 
-### MTK OpenWrt Feeds: [26093b6](https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/26093b6d126807756472b7fec5d53951d353029b)
+### MTK OpenWrt Feeds: [2459584](https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/24595844f63aebb6ccb9bcd28d9690dbfc541a46)
 
 ```
-[][Critical][kernel][mt7987][eth][linux-firmware: mediatek: mt7987: Update built-in 2.5Gphy firmware to 2026/02/25, v7.3]
+[][MAC80211][kernel-6.12][wed][Refactor wed msdu page ring init for next generation wifi chip compatible]
 
 [Description]
-Update built-in 2.5Gphy firmware to 2026/02/25, v7.3
+Refactor wed msdu page ring init for next generation wifi chip compatible
+and add mt76 patch for mp4.3 build pass
 
-Change log (v7.2):
-- Correct misidentification of TX Pause frame in PHY
-Change log (v7.3):
-- Fine tune control flow for GBE EEE
-
-[Release-log]
+[Root Cause]
 N/A
 
+[Solution]
+N/A
 
-Change-Id: I0e7d1226098c610a639f23839cfa342ed741180d
-Reviewed-on: https://gerrit.mediatek.inc/c/openwrt/feeds/mtk_openwrt_feeds/+/11801729
+[How to Verify]
+N/A
+
+[Info to Customer]
+N/A
+
+Change-Id: I65784a91c8657b65e0b7ab4961c3a7da8a7cab50
+Reviewed-on: https://gerrit.mediatek.inc/c/openwrt/feeds/mtk_openwrt_feeds/+/11890197
 ```
 
 ### l1parser: [081bb31](https://github.com/chasey-dev/l1parser/commit/081bb31211efc74594d25bfd1bb5811f3408a205)
