@@ -38,7 +38,7 @@ env:
   REPO_URL: https://github.com/chasey-dev/immortalwrt-mt798x-rebase
   REPO_BRANCH: 25.12-dev
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
+  CONFIG_FILE: cudy_tr3000-256mb-v1.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
@@ -105,7 +105,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.ccache
-          key: ${{ runner.os }}-ccache-${{ env.REPO_BRANCH }}-${{ hashFiles('.config') }}
+          key: ${{ runner.os }}-ccache-${{ env.REPO_BRANCH }}-${{ hashFiles('cudy_tr3000-256mb-v1.config') }}
           restore-keys: |
             ${{ runner.os }}-ccache-${{ env.REPO_BRANCH }}-
             ${{ runner.os }}-ccache-
@@ -114,7 +114,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: openwrt/dl
-          key: ${{ runner.os }}-dl-${{ env.REPO_BRANCH }}-${{ hashFiles('feeds.conf.default', '.config', 'diy-part1.sh', 'diy-part2.sh') }}
+          key: ${{ runner.os }}-dl-${{ env.REPO_BRANCH }}-${{ hashFiles('feeds.conf.default', 'cudy_tr3000-256mb-v1.config', 'diy-part1.sh', 'diy-part2.sh') }}
           restore-keys: |
             ${{ runner.os }}-dl-${{ env.REPO_BRANCH }}-
             ${{ runner.os }}-dl-
